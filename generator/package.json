@@ -1,6 +1,6 @@
 {
-  "name": "adoptopenjdk-deb-generator",
-  "version": "0.0.6",
+  "name": "amazoncorretto-deb-generator",
+  "version": "0.0.1",
   "description": "",
   "main": "generate.js",
   "scripts": {},

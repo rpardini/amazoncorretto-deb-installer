@@ -4,13 +4,13 @@ set -e
 BASE_DIR=$(pwd)
 
 BUILD_BINARY_PACKAGES=true
-TEST_INSTALL_BINARY=false
+TEST_INSTALL_BINARY=true
 BUILD_SOURCE_PACKAGES=true
 
 if [[ "$1" == "debian" ]]; then
   BUILD_SOURCE_PACKAGES=false
-  TEST_INSTALL_BINARY=false
-  TEST_INSTALL_DISTRO=noonecares
+  TEST_INSTALL_BINARY=true
+  TEST_INSTALL_DISTRO=stable
   TEST_INSTALL_ARCH="all"
 fi
 
@@ -45,12 +45,12 @@ for oneJavaVersion in *; do
         # line in the dockerfile, but is better than nothing.
         # @TODO: make this a separate step.
         if [[ "$TEST_INSTALL_DISTRO" == "$oneDistribution" ]]; then
-          ls -la adoptopenjdk-*-installer_*_${TEST_INSTALL_ARCH}.deb || true
-          dpkg -i adoptopenjdk-*-installer_*_${TEST_INSTALL_ARCH}.deb
+          ls -la amazoncorretto-*-installer_*_${TEST_INSTALL_ARCH}.deb || true
+          dpkg -i amazoncorretto-*-installer_*_${TEST_INSTALL_ARCH}.deb
         fi
       fi
 
-      mv -v adoptopenjdk* /binaries/
+      mv -v amazoncorretto* /binaries/
     fi
 
     if [[ "a$BUILD_SOURCE_PACKAGES" == "atrue" ]]; then
@@ -59,7 +59,7 @@ for oneJavaVersion in *; do
       debuild -S -us -uc # source-only build, no signing.
       ls -laR
       cd ${BUILD_BASE_DIR}
-      mv -v adoptopenjdk* /sourcepkg/
+      mv -v amazoncorretto* /sourcepkg/
     fi
 
   done

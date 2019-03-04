@@ -10,12 +10,12 @@ if [[ ! -d /to_repo/empty ]]; then
     # Lets initialize the reprepro config...
     mkdir -p /repo/conf
     cat << EOD > /repo/conf/distributions
-Origin: deb.adoptopenjdk.net
-Label: deb.adoptopenjdk.net
+Origin: deb.corretto.aws.amazon.com
+Label: deb.corretto.aws.amazon.com
 Codename: stable
-Architectures: amd64 ppc64el arm64 armel s390x source
+Architectures: amd64 source
 Components: main
-Description: AdoptOpenJDK Debian Installer Packages
+Description: Amazon Corretto Debian Installer Packages
 SignWith: ! /opt/sign_repo_async.sh
 EOD
 

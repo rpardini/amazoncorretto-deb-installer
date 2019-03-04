@@ -2,7 +2,7 @@
 
 // generator version; this is used to add to the generated package's version timestamp (in minutes)
 // avoid bumping this too high.
-const generatorVersionIncrement = 7;
+const generatorVersionIncrement = 0;
 
 // we use promisified filesystem functions from node.js
 const regular_fs = require('fs');
@@ -16,24 +16,25 @@ const moment = require('moment');
 // mustache to resolve the templates.
 const mustache = require('mustache');
 
+/*
 // I use 'good-guy-http', lol, this does quick and easy disk caching of the URLs
-// so that I don't hammer adoptopenjdk during development
+// so that I don't hammer amazoncorretto during development
 // the interactions with docker-layer-cache are a bit confusing though
 let goodGuyDiskCache = require("good-guy-disk-cache");
 const goodGuy = require('good-guy-http')({
-    cache: new goodGuyDiskCache("adoptopenjdk-deb-generator"),
+    cache: new goodGuyDiskCache("amazoncorretto-deb-generator"),
     forceCaching: {
         cached: true,
         timeToLive: 60 * 60 * 1000, // in milliseconds
         mustRevalidate: false
     },
 });
+*/
 
 
-const architectures = new Set(['x64', 'aarch64', 'ppc64le', 's390x', 'arm']);
-// @TODO: is 'arm' really 'armel'?
-const archMapJdkToDebian = {'x64': 'amd64', 'aarch64': 'arm64', 'ppc64le': 'ppc64el', 's390x': 's390x', 'arm': 'armel'}; //subtle differences
-const wantedJavaVersions = new Set([8, 9, 10, 11]);
+const architectures = new Set(['x64']);
+const archMapJdkToDebian = {'x64': 'amd64'}; //subtle differences
+const wantedJavaVersions = new Set([8, 11]);
 const linuxesAndDistros = new Set([
     {
         name: 'ubuntu',
@@ -60,9 +61,6 @@ const signerEmail = "ricardo@pardini.net";
 async function main () {
     let allPromises = [];
     allPromises.push(generateForGivenKitAndJVM("jdk", "hotspot"));
-    allPromises.push(generateForGivenKitAndJVM("jdk", "openj9"));
-    allPromises.push(generateForGivenKitAndJVM("jre", "hotspot"));
-    allPromises.push(generateForGivenKitAndJVM("jre", "openj9"));
     await Promise.all(allPromises);
 }
 
@@ -74,7 +72,7 @@ async function generateForGivenKitAndJVM (jdkOrJre, hotspotOrOpenJ9) {
     const templateFilesPerArch = await walk(`${basePath}/templates/per-arch/`);
     const generatedDirBase = `${basePath}/generated`;
 
-    const jdkBuildsPerArch = await getJDKInfosFromAdoptOpenJDKAPI(jdkOrJre, hotspotOrOpenJ9);
+    const jdkBuildsPerArch = await getJDKInfosFromCorrettoAPI(jdkOrJre, hotspotOrOpenJ9);
 
     // who DOESN'T love 4 nested for-loops?
     for (const linux of linuxesAndDistros) {
@@ -89,10 +87,10 @@ async function generateForGivenKitAndJVM (jdkOrJre, hotspotOrOpenJ9) {
                     allDebArches: linux.singleBinaryForAllArches ? "all" : javaX.allDebArches,
                     distribution: `${distroLinux}`,
                     version: linux.useDistroInVersion ? `${javaX.baseJoinedVersion}~${distroLinux}` : javaX.baseJoinedVersion,
-                    virtualPackageName: `adoptopenjdk-${javaX.jdkVersion}-installer`,
+                    virtualPackageName: `amazoncorretto-${javaX.jdkVersion}-installer`,
                     commentForVirtualPackage: javaX.isDefaultForVirtualPackage ? "" : "#",
-                    sourcePackageName: `adoptopenjdk-${javaX.jdkJreVersionJvmType}-installer`,
-                    setDefaultPackageName: `adoptopenjdk-${javaX.jdkJreVersionJvmType}-set-default`,
+                    sourcePackageName: `amazoncorretto-${javaX.jdkJreVersionJvmType}-installer`,
+                    setDefaultPackageName: `amazoncorretto-${javaX.jdkJreVersionJvmType}-set-default`,
                     signerName: signerName,
                     signerEmail: signerEmail
                 };
@@ -128,7 +126,7 @@ async function joinDebianPostinstForAllArches (archProcessedTemplates, destPath,
     for (const debArch of Object.keys(archProcessedTemplates)) {
         postInstContents.push(`if [[ "$DPKG_ARCH" == "${debArch}" ]]; then`);
         postInstContents.push(`echo "Installing for arch '${debArch}'..."`);
-        postInstContents.push((archProcessedTemplates[debArch]['adoptopenjdk-javaX-installer.postinst.archX']));
+        postInstContents.push((archProcessedTemplates[debArch]['amazoncorretto-javaX-installer.postinst.archX']));
         postInstContents.push(`DID_FIND_ARCH=true`);
         postInstContents.push(`fi`);
     }
@@ -140,7 +138,7 @@ async function joinDebianPostinstForAllArches (archProcessedTemplates, destPath,
     await writeTemplateFile(destPath, {
         dirs: "",
         executable: true
-    }, `adoptopenjdk-${javaX.jdkJreVersionJvmType}-installer.postinst`, postInstContents.join("\n"));
+    }, `amazoncorretto-${javaX.jdkJreVersionJvmType}-installer.postinst`, postInstContents.join("\n"));
 }
 
 function createProducesLine (javaX) {
@@ -166,7 +164,7 @@ function createJavaProducesPrefixForVersion (javaVersion, suffix) {
     return javas;
 }
 
-async function getJDKInfosFromAdoptOpenJDKAPI (jdkOrJre, hotspotOrOpenJ9) {
+async function getJDKInfosFromCorrettoAPI (jdkOrJre, hotspotOrOpenJ9) {
     let javaBuildArchsPerVersion = new Map();
     for (let wantedJavaVersion of wantedJavaVersions) {
         try {
@@ -179,19 +177,49 @@ async function getJDKInfosFromAdoptOpenJDKAPI (jdkOrJre, hotspotOrOpenJ9) {
     return javaBuildArchsPerVersion;
 }
 
+// @TODO: maybe Amazon will provide an API in the future?
+//        or maybe we can parse this from the HTML? ergh
+function getFakeCorrettoAPIData (jdkVersion) {
+    // from https://docs.aws.amazon.com/corretto/latest/corretto-8-ug/downloads-list.html
+    if (jdkVersion === 8)
+        return [{
+            "os": "linux",
+            "architecture": "x64",
+            "binary_type": "jdk",
+            "openjdk_impl": "hotspot",
+            "binary_name": "amazon-corretto-8.202.08.2-linux-x64.tar.gz",
+            "binary_link": "http://d2znqt9b1bc64u.cloudfront.net/amazon-corretto-8.202.08.2-linux-x64.tar.gz",
+            "md5sum": "23a4e82eb9737dfd34c748b63f8119f7",
+            "version": "8",
+            "heap_size": "normal",
+            "updated_at": "2019-03-04T00:46:21Z",
+            "timestamp": "2019-03-04T00:46:21Z",
+            "release_name": "jdk8.202.08.2",
+            "dir_inside_tgz": "amazon-corretto-8.202.08.2-linux-x64"
+        }];
+    // from https://docs.aws.amazon.com/corretto/latest/corretto-11-ug/downloads-list.html
+    if (jdkVersion === 11)
+        return [{
+            "os": "linux",
+            "architecture": "x64",
+            "binary_type": "jdk",
+            "openjdk_impl": "hotspot",
+            "binary_name": "amazon-corretto-11.0.2.9.1-linux-x64.tar.gz",
+            "binary_link": "http://d2jnoze5tfhthg.cloudfront.net/amazon-corretto-11.0.2.9.1-linux-x64.tar.gz",
+            "md5sum": "3300e3daa70ff13188cf1ef2b8e5edfa",
+            "version": "11",
+            "heap_size": "normal",
+            "updated_at": "2019-03-04T00:46:21Z",
+            "timestamp": "2019-03-04T00:46:21Z",
+            "release_name": "jdk11.0.2.9.1",
+            "dir_inside_tgz": "amazon-corretto-11.0.2.9.1-linux-x64"
+        }];
+    return null;
+}
+
 async function processAPIData (jdkVersion, wantedArchs, jdkOrJre, hotspotOrOpenJ9) {
-
-    let jsonStringAPIResponse;
-    let apiURL = `https://api.adoptopenjdk.net/v2/latestAssets/releases/openjdk${jdkVersion}?os=linux&heap_size=normal&openjdk_impl=${hotspotOrOpenJ9}&type=${jdkOrJre}`;
-
-    try {
-        let httpResponse = await goodGuy(apiURL);
-        jsonStringAPIResponse = httpResponse.body;
-    } catch (e) {
-        throw new Error(`${e.message} from URL ${apiURL}`)
-    }
-
-    let jsonContents = JSON.parse(jsonStringAPIResponse);
+    // This is, of course, fake.
+    let jsonContents = getFakeCorrettoAPIData(jdkVersion);
 
     let archData = new Map(); // builds per-architecture
     let slugs = new Map();
@@ -203,7 +231,7 @@ async function processAPIData (jdkVersion, wantedArchs, jdkOrJre, hotspotOrOpenJ
 
     let commonProps = {
         jdkVersion: jdkVersion,
-        destDir: `adoptopenjdk-${jdkVersion}-${jdkOrJre}-${hotspotOrOpenJ9}`,
+        destDir: `amazoncorretto-${jdkVersion}-${jdkOrJre}-${hotspotOrOpenJ9}`,
         jdkJre: jdkOrJre,
         JDKorJREupper: jdkOrJre.toUpperCase(),
         jvmType: hotspotOrOpenJ9,
@@ -211,7 +239,7 @@ async function processAPIData (jdkVersion, wantedArchs, jdkOrJre, hotspotOrOpenJ
         jdkJreVersionJvmType: jdkJreVersionJvmType,
     };
 
-    commonProps.fullHumanTitle = `AdoptOpenJDK ${commonProps.JDKorJREupper} ${commonProps.jdkVersion} with ${commonProps.jvmTypeDesc}`;
+    commonProps.fullHumanTitle = `Amazon Corretto ${commonProps.JDKorJREupper} ${commonProps.jdkVersion} with ${commonProps.jvmTypeDesc}`;
     commonProps.isDefaultForVirtualPackage = (jdkOrJre === "jdk" && hotspotOrOpenJ9 === "hotspot");
 
     for (let oneRelease of jsonContents) {
@@ -231,13 +259,13 @@ async function processAPIData (jdkVersion, wantedArchs, jdkOrJre, hotspotOrOpenJ
                 arch: oneRelease.architecture,
                 jdkArch: oneRelease.architecture,
                 debArch: debArch,
-                dirInsideTarGz: oneRelease.release_name, // release name from AOJ is most of the time correct
+                dirInsideTarGz: oneRelease.dir_inside_tgz, // release name from AOJ is most of the time correct
                 dirInsideTarGzShort: oneRelease.release_name.split(/_openj9/)[0], // release name without openj9 part...
                 dirInsideTarGzWithJdkJre: `${oneRelease.release_name}-${jdkOrJre}`, // release name with '-jre' sometimes.
                 slug: oneRelease.release_name,
                 filename: oneRelease.binary_name,
                 downloadUrl: oneRelease.binary_link,
-                sha256sum: await getShaSum(oneRelease.checksum_link)
+                md5sum: oneRelease.md5sum
             },
             commonProps);
 
