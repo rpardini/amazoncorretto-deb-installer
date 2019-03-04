@@ -1,0 +1,7 @@
+Origin: deb.corretto.aws.amazon.com
+Label: deb.corretto.aws.amazon.com
+Codename: stable
+Architectures: amd64 source
+Components: main
+Description: Amazon Corretto Debian Installer Packages
+SignWith: ! /opt/sign_repo_async.sh
