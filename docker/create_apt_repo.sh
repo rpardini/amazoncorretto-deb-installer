@@ -22,6 +22,7 @@ EOD
     # Determine a list of binary debs to include in the repo
     # reprepro does not accept identical package(-names) with different contents (sha1)
     # our build does generate different contents (in different runs) due to file dates and so. @TODO
+    mkdir -p /repo/pool
     LIST_DEBS_NEW=""
     for ONE_DEB in /to_repo/*.deb; do
       echo "Considering adding to repo: $ONE_DEB"

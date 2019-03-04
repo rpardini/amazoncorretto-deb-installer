@@ -2,10 +2,10 @@
 
 set -e
 
-declare -i SIGN_OSX=0
-declare -i LAUNCHPAD=0
-declare -i APT_REPO=0
-declare -i PUSH_APT_REPO=0
+declare -i SIGN_OSX=1
+declare -i LAUNCHPAD=1
+declare -i APT_REPO=1
+declare -i PUSH_APT_REPO=1
 #declare NO_CACHE="--no-cache"
 declare NO_CACHE=""
 

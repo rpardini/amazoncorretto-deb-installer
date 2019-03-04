@@ -27,13 +27,13 @@ RUN apt-get update
 RUN apt-get -y --no-install-recommends install devscripts build-essential lintian debhelper fakeroot lsb-release figlet
 # install-time dependencies (those are listed in Depends or Pre-Depends in debian/control file)
 RUN apt-get -y --no-install-recommends install java-common wget locales ca-certificates
-WORKDIR /opt/adoptopenjdk/ubuntu
-COPY --from=generator /gen/generated/ubuntu /opt/adoptopenjdk/ubuntu
-RUN ls -laR /opt/adoptopenjdk/ubuntu
-ADD docker/build_packages_multi.sh /opt/adoptopenjdk/
+WORKDIR /opt/amazoncorretto/ubuntu
+COPY --from=generator /gen/generated/ubuntu /opt/amazoncorretto/ubuntu
+RUN ls -laR /opt/amazoncorretto/ubuntu
+ADD docker/build_packages_multi.sh /opt/amazoncorretto/
 # those will be populated by the build script.
 RUN mkdir -p /binaries /sourcepkg
-RUN /opt/adoptopenjdk/build_packages_multi.sh ubuntu
+RUN /opt/amazoncorretto/build_packages_multi.sh ubuntu
 
 
 ########################################################################################################################
@@ -49,12 +49,12 @@ RUN apt-get -y --no-install-recommends install devscripts build-essential lintia
 RUN apt-get -y --no-install-recommends install java-common wget locales ca-certificates
 # install-test dependencies
 RUN apt-get -y --no-install-recommends install libxrender1 libxtst6 libxi6 libfontconfig1 libasound2
-WORKDIR /opt/adoptopenjdk/debian
-COPY --from=generator /gen/generated/debian /opt/adoptopenjdk/debian
-ADD docker/build_packages_multi.sh /opt/adoptopenjdk/
+WORKDIR /opt/amazoncorretto/debian
+COPY --from=generator /gen/generated/debian /opt/amazoncorretto/debian
+ADD docker/build_packages_multi.sh /opt/amazoncorretto/
 # those will be populated by the build script.
 RUN mkdir -p /binaries /sourcepkg
-RUN /opt/adoptopenjdk/build_packages_multi.sh debian
+RUN /opt/amazoncorretto/build_packages_multi.sh debian
 
 
 ########################################################################################################################
