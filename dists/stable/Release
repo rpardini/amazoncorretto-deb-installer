@@ -1,27 +1,27 @@
 Origin: deb.corretto.aws.amazon.com
 Label: deb.corretto.aws.amazon.com
 Codename: stable
-Date: Tue, 05 Mar 2019 08:43:36 UTC
+Date: Tue, 05 Mar 2019 08:50:06 UTC
 Architectures: amd64
 Components: main
 Description: Amazon Corretto Debian Installer Packages
 MD5Sum:
- 385003e7aefc8f4e89a8541b3db529d4 7787 main/binary-amd64/Packages
- 0c8a15a2ac72d7568c7000479d468312 1674 main/binary-amd64/Packages.gz
+ 9b6e69abec5bedcd7df7b119f04ce865 7787 main/binary-amd64/Packages
+ 66ec6d75529cb6e8a5d7069967d69c53 1670 main/binary-amd64/Packages.gz
  2299941c1d7cfc108584adf4a61d4bec 162 main/binary-amd64/Release
  d41d8cd98f00b204e9800998ecf8427e 0 main/source/Sources
  7029066c27ac6f5ef18d660d5741979a 20 main/source/Sources.gz
  d11e4d3697822f6fb091fdf2d697f735 163 main/source/Release
 SHA1:
- 7faa3d8d6dca9a4efdf643270119873030e4a7a5 7787 main/binary-amd64/Packages
- 7ec89a8fddb6c95a1644a7a5fb810ab96b9177c2 1674 main/binary-amd64/Packages.gz
+ bc13dcfa2e00c8a79a0e46ef8d4ebac16602aff1 7787 main/binary-amd64/Packages
+ 9e6a1e859e91df4dc4700af1fee180b281acb6c0 1670 main/binary-amd64/Packages.gz
  fe5c0c6dd9846641df7efa9b911c2c3e8a5ac063 162 main/binary-amd64/Release
  da39a3ee5e6b4b0d3255bfef95601890afd80709 0 main/source/Sources
  46c6643f07aa7f6bfe7118de926b86defc5087c4 20 main/source/Sources.gz
  82eeef89d2aabc8305e79247a71bcc1adb5791e6 163 main/source/Release
 SHA256:
- ce99e644e1a2bfd82ac7245fab7ee2d065b253830e8bdde5b57f63e8f3e5cb7a 7787 main/binary-amd64/Packages
- aa6e87397e0bc7e09f57cedb7423098606f17dd0eecc7c644f62d5c611c562a0 1674 main/binary-amd64/Packages.gz
+ 8303ba2edc05a8ba6aedec87ad6a665744a875b57d2baa90516b290369b605d1 7787 main/binary-amd64/Packages
+ 16a365fb912a4950857f3c6e221d9cb20dd161cae2976c4ae0b2b3a4fdaa0256 1670 main/binary-amd64/Packages.gz
  275a3a2dbca12bdc961937bdc7bd5f50678b5b1383f63461cc55735cc18298c1 162 main/binary-amd64/Release
  e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 0 main/source/Sources
  59869db34853933b239f1e2219cf7d431da006aa919635478511fabbfc8849d2 20 main/source/Sources.gz
