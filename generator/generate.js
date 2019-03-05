@@ -2,7 +2,7 @@
 
 // generator version; this is used to add to the generated package's version timestamp (in minutes)
 // avoid bumping this too high.
-const generatorVersionIncrement = 8;
+const generatorVersionIncrement = 1;
 
 // we use promisified filesystem functions from node.js
 const regular_fs = require('fs');
@@ -16,7 +16,10 @@ const moment = require('moment');
 // mustache to resolve the templates.
 const mustache = require('mustache');
 
-/*
+// puppeteer to hit Amazon's HTML pages for Corretto and parse the latest version
+const puppeteer = require('puppeteer');
+
+
 // I use 'good-guy-http', lol, this does quick and easy disk caching of the URLs
 // so that I don't hammer amazoncorretto during development
 // the interactions with docker-layer-cache are a bit confusing though
@@ -29,7 +32,6 @@ const goodGuy = require('good-guy-http')({
         mustRevalidate: false
     },
 });
-*/
 
 
 const architectures = new Set(['x64']);
@@ -164,11 +166,74 @@ function createJavaProducesPrefixForVersion (javaVersion, suffix) {
     return javas;
 }
 
+async function parseAmazonHTML (versions) {
+    const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
+    const page = await browser.newPage();
+
+    let allData = {};
+    for (let version of versions) {
+        //page.on('console', msg => console.log('PAGE LOG:', msg.text()));
+        await page.goto(`https://docs.aws.amazon.com/corretto/latest/corretto-${version}-ug/downloads-list.html`);
+        //await page.screenshot({path: 'example.png'});
+        const data = await page.evaluate(() => {
+            let ret = {};
+            let links = document.querySelectorAll('div#main a[href]');
+            for (let link of links) {
+                let linkHref = link.href;
+                if (linkHref.endsWith("-linux-x64.tar.gz")) {
+                    ret['linux_downurl'] = linkHref;
+                    // go up and down the table to find the md5 cell...
+                    console.log(link.parentElement.parentElement.parentElement.children[1].textContent);
+                    ret['linux_md5'] = link.parentElement.parentElement.parentElement.children[1].textContent.trim();
+                }
+            }
+            return ret;
+        });
+        allData[version] = data;
+    }
+    await browser.close();
+    return allData;
+}
+
+async function extractBuildInfoFromCorrettoVersionData(versionData, jVersion) {
+    let downUrl = versionData['linux_downurl'].replace("https://", "http://");
+    let parsedUrl = new URL(downUrl);
+    let slashes = parsedUrl.pathname.split('/');
+    let filename = slashes[slashes.length-1];
+    let version = filename.split("amazon-corretto-")[1].split("-linux-x64.tar.gz")[0];
+    let noExt = filename.split(".tar.gz")[0];
+
+    // Now hit the downURL with a HEAD request so we can get the last modified date.
+    let response = await goodGuy({url: downUrl, method: 'HEAD'});
+    let lastModifiedString = response.headers["last-modified"];
+
+    return [{
+        "os": "linux",
+        "architecture": "x64",
+        "binary_type": "jdk",
+        "openjdk_impl": "hotspot",
+        "binary_name": filename,
+        "binary_link": downUrl,
+        "md5sum": versionData['linux_md5'],
+        "version": jVersion,
+        "heap_size": "normal",
+        "updated_at": lastModifiedString,
+        "timestamp": lastModifiedString,
+        "release_name": version,
+        "dir_inside_tgz": noExt
+    }];
+}
+
 async function getJDKInfosFromCorrettoAPI (jdkOrJre, hotspotOrOpenJ9) {
     let javaBuildArchsPerVersion = new Map();
+
+    // hit the corretto HTML page
+    let corrVersions = await parseAmazonHTML(wantedJavaVersions);
+
     for (let wantedJavaVersion of wantedJavaVersions) {
         try {
-            let apiData = await processAPIData(wantedJavaVersion, architectures, jdkOrJre, hotspotOrOpenJ9);
+            let corrVersion = await extractBuildInfoFromCorrettoVersionData(corrVersions[wantedJavaVersion], wantedJavaVersion);
+            let apiData = await processAPIData(wantedJavaVersion, architectures, jdkOrJre, hotspotOrOpenJ9, corrVersion);
             javaBuildArchsPerVersion.set(wantedJavaVersion, apiData);
         } catch (e) {
             console.error(`Error getting release data for ${wantedJavaVersion} ${jdkOrJre} ${hotspotOrOpenJ9}: ${e.message}`);
@@ -177,50 +242,8 @@ async function getJDKInfosFromCorrettoAPI (jdkOrJre, hotspotOrOpenJ9) {
     return javaBuildArchsPerVersion;
 }
 
-// @TODO: maybe Amazon will provide an API in the future?
-//        or maybe we can parse this from the HTML? ergh
-function getFakeCorrettoAPIData (jdkVersion) {
-    // from https://docs.aws.amazon.com/corretto/latest/corretto-8-ug/downloads-list.html
-    if (jdkVersion === 8)
-        return [{
-            "os": "linux",
-            "architecture": "x64",
-            "binary_type": "jdk",
-            "openjdk_impl": "hotspot",
-            "binary_name": "amazon-corretto-8.202.08.2-linux-x64.tar.gz",
-            "binary_link": "http://d2znqt9b1bc64u.cloudfront.net/amazon-corretto-8.202.08.2-linux-x64.tar.gz",
-            "md5sum": "23a4e82eb9737dfd34c748b63f8119f7",
-            "version": "8",
-            "heap_size": "normal",
-            "updated_at": "2019-03-04T00:46:21Z",
-            "timestamp": "2019-03-04T00:46:21Z",
-            "release_name": "jdk8.202.08.2",
-            "dir_inside_tgz": "amazon-corretto-8.202.08.2-linux-x64"
-        }];
-    // from https://docs.aws.amazon.com/corretto/latest/corretto-11-ug/downloads-list.html
-    if (jdkVersion === 11)
-        return [{
-            "os": "linux",
-            "architecture": "x64",
-            "binary_type": "jdk",
-            "openjdk_impl": "hotspot",
-            "binary_name": "amazon-corretto-11.0.2.9.1-linux-x64.tar.gz",
-            "binary_link": "http://d2jnoze5tfhthg.cloudfront.net/amazon-corretto-11.0.2.9.1-linux-x64.tar.gz",
-            "md5sum": "3300e3daa70ff13188cf1ef2b8e5edfa",
-            "version": "11",
-            "heap_size": "normal",
-            "updated_at": "2019-03-04T00:46:21Z",
-            "timestamp": "2019-03-04T00:46:21Z",
-            "release_name": "jdk11.0.2.9.1",
-            "dir_inside_tgz": "amazon-corretto-11.0.2.9.1-linux-x64"
-        }];
-    return null;
-}
 
-async function processAPIData (jdkVersion, wantedArchs, jdkOrJre, hotspotOrOpenJ9) {
-    // This is, of course, fake.
-    let jsonContents = getFakeCorrettoAPIData(jdkVersion);
-
+async function processAPIData (jdkVersion, wantedArchs, jdkOrJre, hotspotOrOpenJ9, jsonContents) {
     let archData = new Map(); // builds per-architecture
     let slugs = new Map();
     let allDebArches = [];
@@ -249,8 +272,9 @@ async function processAPIData (jdkVersion, wantedArchs, jdkOrJre, hotspotOrOpenJ
         }
         let debArch = archMapJdkToDebian[oneRelease.architecture];
 
-        let buildTS = moment(oneRelease.timestamp, moment.ISO_8601);
-        let updatedTS = moment(oneRelease.updated_at, moment.ISO_8601);
+        let buildTS = moment(oneRelease.timestamp);
+        let updatedTS = moment(oneRelease.updated_at);
+        console.log(buildTS);
         let highTS = (buildTS > updatedTS) ? buildTS : updatedTS;
         highestBuildTS = (highTS > highestBuildTS) ? highTS : highestBuildTS;
 
