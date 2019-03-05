@@ -4,44 +4,44 @@ Hash: SHA256
 Origin: deb.corretto.aws.amazon.com
 Label: deb.corretto.aws.amazon.com
 Codename: stable
-Date: Mon, 04 Mar 2019 18:41:35 UTC
+Date: Tue, 05 Mar 2019 08:33:02 UTC
 Architectures: amd64
 Components: main
 Description: Amazon Corretto Debian Installer Packages
 MD5Sum:
- 39fe6bdbefce5aa59bb8cfe16aa836d4 7491 main/binary-amd64/Packages
- 4e06c5683143d40c9a3c4fd754c826f9 1636 main/binary-amd64/Packages.gz
+ 92d028d46dbb937307d51a38eabeebf6 7787 main/binary-amd64/Packages
+ 63f93a20982d8acf316bdfc1fb26cd06 1675 main/binary-amd64/Packages.gz
  2299941c1d7cfc108584adf4a61d4bec 162 main/binary-amd64/Release
  d41d8cd98f00b204e9800998ecf8427e 0 main/source/Sources
  7029066c27ac6f5ef18d660d5741979a 20 main/source/Sources.gz
  d11e4d3697822f6fb091fdf2d697f735 163 main/source/Release
 SHA1:
- cf20d4c8fda2276a7950b2b77a1de4d1d90213ca 7491 main/binary-amd64/Packages
- 0a6be399d0781f84a7a5b8494c252dd821940528 1636 main/binary-amd64/Packages.gz
+ 75360aa8b1a44157e78b7eed6bbca99b022f8b8d 7787 main/binary-amd64/Packages
+ 04878c4fac54ee939eaddce9a3bc4d62a32b3185 1675 main/binary-amd64/Packages.gz
  fe5c0c6dd9846641df7efa9b911c2c3e8a5ac063 162 main/binary-amd64/Release
  da39a3ee5e6b4b0d3255bfef95601890afd80709 0 main/source/Sources
  46c6643f07aa7f6bfe7118de926b86defc5087c4 20 main/source/Sources.gz
  82eeef89d2aabc8305e79247a71bcc1adb5791e6 163 main/source/Release
 SHA256:
- 8f9ea67c84480fee6d0bb2fae1c44d19f7c388e6ae3ffc8d02c713e60ec14eda 7491 main/binary-amd64/Packages
- 00c1faf0ffa47c7a06b982f631f976ce4847563d6471e65e7666d04c8ca39e0f 1636 main/binary-amd64/Packages.gz
+ 70287432e9dfadc8de878dfe37b0ed9cb206893a29c2be852ff917264a53d33c 7787 main/binary-amd64/Packages
+ 1dffc94e26087d592120f4a3e8aff1b3763df9553e450f3a2e5c15cadd9f72b8 1675 main/binary-amd64/Packages.gz
  275a3a2dbca12bdc961937bdc7bd5f50678b5b1383f63461cc55735cc18298c1 162 main/binary-amd64/Release
  e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 0 main/source/Sources
  59869db34853933b239f1e2219cf7d431da006aa919635478511fabbfc8849d2 20 main/source/Sources.gz
  865e6bb49252ccd99170403b83cadb437e36f1f53f73fd8992b4dcc57a675358 163 main/source/Release
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCAAdFiEEavYwEcNUbpIUruW8PTjKEqZsXQIFAlx9cWAACgkQPTjKEqZs
-XQKTWA//bj+leQ3nnKau+GYDBNuZ7JE38RfvC18NZEg7DVkEFJYypa5viCUQROys
-+Rg6DqTw15T5vdb7cfhPcCIwWQzEr8yYg4vWWniUef3yETxuNC2hooEXFSFSa5ul
-foM8dmjvXBZ27z17MI9hxEgu+kWcpT6QxhTraALBJrSnPnTbNx+wSYZBVr/ljtgW
-DgZbqk2fauUV5qHtQP+Sn8m18hV5bv0m7HPvHaGxltx7FL4bodTJP149EqzyBcKw
-TLAsfxXoMDom6bL7BVRvHy8i97cVlJ0VsFy5O0JuZnfozn/3MxuFRh08jqnIb8r0
-2vTuIgj9QxZfmdsj5/VD1HuGSXnJgEuPRFbgsaWrcVqbf5pTpkZxkgQ0EuCeQJ4t
-0gKXW5YQ7EWk2msACWmyVI/8m6N0nUhV26XbU1WUTdmPtUbnkRcBG6r1bDagl3OW
-OWZTj7JpGCrbM8tsENKPfoTobzlWjsXS7enKFn84VOcR/K6zB/2w+V8cqlV5TivM
-yeIhmD0FWXQd022cA5kW8DEouSEn7UQmYCDi00nOqmF/F+0FRjXmLZ4ffi0RutmO
-E5N8WLUNCxsOKQAqk7tM6eE7z6XSQtGkOTtPA4SPhAA2yzsS80ECKlbkozCsjqV0
-m0L8cyYLFS1uEOsoFCGixotDjHZI4nUNsnthBlS76hayfi2T5SY=
-=grjR
+iQIzBAEBCAAdFiEEavYwEcNUbpIUruW8PTjKEqZsXQIFAlx+ND8ACgkQPTjKEqZs
+XQLtCQ/9G5POgKMZB9/QOEdkVzXr3wWtY82c/OyqPh4a5C87bE/Os/9fmgTd4oPR
+x6B3FigrB9GGCZ6uAEjaRFWulS5PFyqSKpuZ2JqscNXoaeriAshbiv6XCaqE8+KB
+UZw9afeEpcFrocAfqlt0eVV8TRvEQ+cvi/pX9ME2kf4gMpvqH2CkrNGJVYnRkJY+
+X6v+O78fcqhZ49VaDHESdXhowDOF+ALrCn7jQ2U+3Lg4DHLWyOloxCt3xBnhvk60
+whZNKc0OiR/x1xEeclddC3vh9Rnb9w2Xp6dR/WeWu1FIVaqs7DiVHO8PjP4LysVs
+grSUUHrP9U4a6ot9VwAZVnTMFc0cQ8RpwW9CHc7F1DO5db3uVEaqo2grWlfcgpPD
+oX8pAQO2o/IiAm724erQ/ciy4QXik5TOU4fKSCrgcUQE/GDofvLYj41l3i57XBBE
+2ZcNpX5M6XHohxTqheFXOoFtzpzP3z1nPnWhs+zjnJWWsHYPDhj3nHgNkeUO1eb+
+snW0sJA2dmOso4RHuaXt3k+hi38+jYA2oqHEMSuzF6UXrJx5izPju0a1VzdMZXX5
+Zsh3C/q6HU5/nYLQQPHekY1JCswofHXhXCMoyhGpJmBoRhxE3l1czEylfEazATWg
+OAC8z4UpHQgUaGS5QhtEx3w9UN/NzF6x6R5Wp7TUZ2hcJvxYZhk=
+=1k5n
 -----END PGP SIGNATURE-----
