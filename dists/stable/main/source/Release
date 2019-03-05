@@ -1,5 +1,0 @@
-Component: main
-Origin: deb.corretto.aws.amazon.com
-Label: deb.corretto.aws.amazon.com
-Architecture: source
-Description: Amazon Corretto Debian Installer Packages
