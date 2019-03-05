@@ -1,41 +1,41 @@
 Package: amazoncorretto-11-installer
 Source: amazoncorretto-11-jdk-hotspot-installer
-Version: 201903040051~11.0.2.9.1
+Version: 201903040052~11.0.2.9.1
 Architecture: all
 Maintainer: Ricardo Pardini (Pardini Yubi 2017) <ricardo@pardini.net>
 Installed-Size: 25
-Depends: amazoncorretto-11-jdk-hotspot-installer (= 201903040051~11.0.2.9.1)
-Recommends: amazoncorretto-11-jdk-hotspot-set-default (= 201903040051~11.0.2.9.1)
+Depends: amazoncorretto-11-jdk-hotspot-installer (= 201903040052~11.0.2.9.1)
+Recommends: amazoncorretto-11-jdk-hotspot-set-default (= 201903040052~11.0.2.9.1)
 Homepage: https://aws.amazon.com/corretto/
 Priority: optional
 Section: java
-Filename: pool/main/a/amazoncorretto-11-jdk-hotspot-installer/amazoncorretto-11-installer_201903040051~11.0.2.9.1_all.deb
-Size: 1560
-SHA256: ae03231534177f105c7fbaa94af52b8407ec227d5a62294d4968a85d14385485
-SHA1: ad25a8b881968647958a29664a20f1872a874d71
-MD5sum: 599a5eae7b084342f8d65069604095e0
+Filename: pool/main/a/amazoncorretto-11-jdk-hotspot-installer/amazoncorretto-11-installer_201903040052~11.0.2.9.1_all.deb
+Size: 1562
+SHA256: 41a6829b1efcd81d4c1f639c1a662199c63ea7fc17c4daa8865b70cb8910d8d5
+SHA1: 97f853404311612703651fcb361d5429f9edf2b8
+MD5sum: 0acd4b8e7e97470d5b0b1a1ebb383b7f
 Description: Virtual package for Amazon Corretto JDK 11 with Hotspot
  Virtual package depending Amazon Corretto JDK 11 with Hotspot
  This package depends on amazoncorretto-11-jdk-hotspot-installer
 
 Package: amazoncorretto-11-jdk-hotspot-installer
-Version: 201903040051~11.0.2.9.1
+Version: 201903040052~11.0.2.9.1
 Architecture: all
 Maintainer: Ricardo Pardini (Pardini Yubi 2017) <ricardo@pardini.net>
 Installed-Size: 67
 Pre-Depends: wget, ca-certificates, bash (>= 4.0)
 Depends: java-common (>= 0.24), ca-certificates-java, locales, libxrender1, libxtst6, libxi6, libfontconfig1, libasound2
 Recommends: fonts-dejavu-extra
-Suggests: fonts-ipafont-gothic, fonts-ipafont-mincho, fonts-wqy-microhei, fonts-wqy-zenhei, fonts-indic, amazoncorretto-11-jdk-hotspot-set-default (= 201903040051~11.0.2.9.1)
+Suggests: fonts-ipafont-gothic, fonts-ipafont-mincho, fonts-wqy-microhei, fonts-wqy-zenhei, fonts-indic, amazoncorretto-11-jdk-hotspot-set-default (= 201903040052~11.0.2.9.1)
 Provides: default-jdk, default-jdk-headless, default-jre, default-jre-headless, java-compiler, java-runtime, java-runtime-headless, java-sdk, java-sdk-headless, java10-runtime, java10-runtime-headless, java10-sdk, java10-sdk-headless, java11-runtime, java11-runtime-headless, java11-sdk, java11-sdk-headless, java2-runtime, java2-runtime-headless, java2-sdk, java2-sdk-headless, java5-runtime, java5-runtime-headless, java5-sdk, java5-sdk-headless, java6-runtime, java6-runtime-headless, java6-sdk, java6-sdk-headless, java7-runtime, java7-runtime-headless, java7-sdk, java7-sdk-headless, java8-runtime, java8-runtime-headless, java8-sdk, java8-sdk-headless, java9-runtime, java9-runtime-headless, java9-sdk, java9-sdk-headless
 Homepage: https://aws.amazon.com/corretto/
 Priority: optional
 Section: java
-Filename: pool/main/a/amazoncorretto-11-jdk-hotspot-installer/amazoncorretto-11-jdk-hotspot-installer_201903040051~11.0.2.9.1_all.deb
-Size: 5716
-SHA256: 0848767cc96dd2fd6b3904705c3de5064f1d84f2636ac12f5fbf4efb4ce50f22
-SHA1: 261b76707ffb0687103c27f04f30265091bb4e3f
-MD5sum: a112bf4dca7c2b3929b47b782c515adb
+Filename: pool/main/a/amazoncorretto-11-jdk-hotspot-installer/amazoncorretto-11-jdk-hotspot-installer_201903040052~11.0.2.9.1_all.deb
+Size: 5724
+SHA256: 8027ff28c5958048ee941311699911fda9e1115f210a47459def62c385d170fc
+SHA1: 4718d09c57b233cbd29dc85dee32994095ed5c9a
+MD5sum: 92bd50fad42cb688dab855602a3ecc5c
 Description: Amazon Corretto JDK 11 with Hotspot
  Installer package for Amazon Corretto JDK 11 with Hotspot.
  This package does not contain binary files, but is only a downloader/installer.
@@ -44,63 +44,63 @@ Description: Amazon Corretto JDK 11 with Hotspot
 
 Package: amazoncorretto-11-jdk-hotspot-set-default
 Source: amazoncorretto-11-jdk-hotspot-installer
-Version: 201903040051~11.0.2.9.1
+Version: 201903040052~11.0.2.9.1
 Architecture: all
 Maintainer: Ricardo Pardini (Pardini Yubi 2017) <ricardo@pardini.net>
 Installed-Size: 33
-Pre-Depends: amazoncorretto-11-jdk-hotspot-installer (= 201903040051~11.0.2.9.1)
+Pre-Depends: amazoncorretto-11-jdk-hotspot-installer (= 201903040052~11.0.2.9.1)
 Conflicts: adoptopenjdk-default, amazoncorretto-default, oracle-java6-set-default, oracle-java7-set-default, oracle-java8-set-default, oracle-java9-set-default
 Provides: amazoncorretto-default
 Homepage: https://aws.amazon.com/corretto/
 Priority: optional
 Section: java
-Filename: pool/main/a/amazoncorretto-11-jdk-hotspot-installer/amazoncorretto-11-jdk-hotspot-set-default_201903040051~11.0.2.9.1_all.deb
-Size: 1874
-SHA256: 982e382b18d6061d070d6e5beac20591e981dcdb4146a55f104aba6409e4576b
-SHA1: f5f3d22b464b3530b7bfabf547c6ff3d3f3a4b1f
-MD5sum: d3f0b6b42419d06346fa616d39e7865e
+Filename: pool/main/a/amazoncorretto-11-jdk-hotspot-installer/amazoncorretto-11-jdk-hotspot-set-default_201903040052~11.0.2.9.1_all.deb
+Size: 1876
+SHA256: 96bd43cb1d1cb6fa3442dae19abd63088e17a44bbee06d8a6a5962e27c280961
+SHA1: 3074bae25229fe30e1145bf53b0323b95687821f
+MD5sum: 0b163a6ba89fe1f9adcc03697d4671aa
 Description: Set Amazon Corretto JDK 11 with Hotspot as default
  Sets Amazon Corretto JDK 11 with Hotspot as the system default.
  This will set JAVA_HOME, and run update-java-alternatives for you.
 
 Package: amazoncorretto-8-installer
 Source: amazoncorretto-8-jdk-hotspot-installer
-Version: 201903040051~8.202.08.2
+Version: 201903040052~8.202.08.2
 Architecture: all
 Maintainer: Ricardo Pardini (Pardini Yubi 2017) <ricardo@pardini.net>
 Installed-Size: 25
-Depends: amazoncorretto-8-jdk-hotspot-installer (= 201903040051~8.202.08.2)
-Recommends: amazoncorretto-8-jdk-hotspot-set-default (= 201903040051~8.202.08.2)
+Depends: amazoncorretto-8-jdk-hotspot-installer (= 201903040052~8.202.08.2)
+Recommends: amazoncorretto-8-jdk-hotspot-set-default (= 201903040052~8.202.08.2)
 Homepage: https://aws.amazon.com/corretto/
 Priority: optional
 Section: java
-Filename: pool/main/a/amazoncorretto-8-jdk-hotspot-installer/amazoncorretto-8-installer_201903040051~8.202.08.2_all.deb
-Size: 1556
-SHA256: 32e039cb4146ad099353c6270168652f604c6499a46d24b15f2e84ba9ea06502
-SHA1: 3bc46984151604f1fdfa28f7baea9852f36e9331
-MD5sum: c37ce7ae691956237851c9b7b1798820
+Filename: pool/main/a/amazoncorretto-8-jdk-hotspot-installer/amazoncorretto-8-installer_201903040052~8.202.08.2_all.deb
+Size: 1558
+SHA256: 9dd3da89e5ad165506dd9e663c1bbe06d6bfe9b23aaca03221df06d968d291b3
+SHA1: 415902a3933df68e1dd6b30b935cb556173cbc83
+MD5sum: 998884df6e10009ba6d45669bcac308e
 Description: Virtual package for Amazon Corretto JDK 8 with Hotspot
  Virtual package depending Amazon Corretto JDK 8 with Hotspot
  This package depends on amazoncorretto-8-jdk-hotspot-installer
 
 Package: amazoncorretto-8-jdk-hotspot-installer
-Version: 201903040051~8.202.08.2
+Version: 201903040052~8.202.08.2
 Architecture: all
 Maintainer: Ricardo Pardini (Pardini Yubi 2017) <ricardo@pardini.net>
 Installed-Size: 67
 Pre-Depends: wget, ca-certificates, bash (>= 4.0)
 Depends: java-common (>= 0.24), ca-certificates-java, locales, libxrender1, libxtst6, libxi6, libfontconfig1, libasound2
 Recommends: fonts-dejavu-extra
-Suggests: fonts-ipafont-gothic, fonts-ipafont-mincho, fonts-wqy-microhei, fonts-wqy-zenhei, fonts-indic, amazoncorretto-8-jdk-hotspot-set-default (= 201903040051~8.202.08.2)
+Suggests: fonts-ipafont-gothic, fonts-ipafont-mincho, fonts-wqy-microhei, fonts-wqy-zenhei, fonts-indic, amazoncorretto-8-jdk-hotspot-set-default (= 201903040052~8.202.08.2)
 Provides: default-jdk, default-jdk-headless, default-jre, default-jre-headless, java-compiler, java-runtime, java-runtime-headless, java-sdk, java-sdk-headless, java2-runtime, java2-runtime-headless, java2-sdk, java2-sdk-headless, java5-runtime, java5-runtime-headless, java5-sdk, java5-sdk-headless, java6-runtime, java6-runtime-headless, java6-sdk, java6-sdk-headless, java7-runtime, java7-runtime-headless, java7-sdk, java7-sdk-headless, java8-runtime, java8-runtime-headless, java8-sdk, java8-sdk-headless
 Homepage: https://aws.amazon.com/corretto/
 Priority: optional
 Section: java
-Filename: pool/main/a/amazoncorretto-8-jdk-hotspot-installer/amazoncorretto-8-jdk-hotspot-installer_201903040051~8.202.08.2_all.deb
-Size: 5676
-SHA256: 8373c7de872a4b0eb3c41c8da0bf2a5d675adc034fc39434a341cd3e9b1de737
-SHA1: c16672528beb534b12d96d0025748ed452e519b9
-MD5sum: a97be8d7df3d07efdf3f53e268e2d85b
+Filename: pool/main/a/amazoncorretto-8-jdk-hotspot-installer/amazoncorretto-8-jdk-hotspot-installer_201903040052~8.202.08.2_all.deb
+Size: 5686
+SHA256: feb0526f8e2397328e0786054f291bc82aeb81cdf9f712099a1645d46d5acc67
+SHA1: 4597f1441c0c34695a1198f1eef060b5426bc8c4
+MD5sum: 1ff1b288981ac4f7bad6f0f5e52b480a
 Description: Amazon Corretto JDK 8 with Hotspot
  Installer package for Amazon Corretto JDK 8 with Hotspot.
  This package does not contain binary files, but is only a downloader/installer.
@@ -109,21 +109,21 @@ Description: Amazon Corretto JDK 8 with Hotspot
 
 Package: amazoncorretto-8-jdk-hotspot-set-default
 Source: amazoncorretto-8-jdk-hotspot-installer
-Version: 201903040051~8.202.08.2
+Version: 201903040052~8.202.08.2
 Architecture: all
 Maintainer: Ricardo Pardini (Pardini Yubi 2017) <ricardo@pardini.net>
 Installed-Size: 33
-Pre-Depends: amazoncorretto-8-jdk-hotspot-installer (= 201903040051~8.202.08.2)
+Pre-Depends: amazoncorretto-8-jdk-hotspot-installer (= 201903040052~8.202.08.2)
 Conflicts: adoptopenjdk-default, amazoncorretto-default, oracle-java6-set-default, oracle-java7-set-default, oracle-java8-set-default, oracle-java9-set-default
 Provides: amazoncorretto-default
 Homepage: https://aws.amazon.com/corretto/
 Priority: optional
 Section: java
-Filename: pool/main/a/amazoncorretto-8-jdk-hotspot-installer/amazoncorretto-8-jdk-hotspot-set-default_201903040051~8.202.08.2_all.deb
-Size: 1874
-SHA256: 0a97b1bb0fb429af4f4c7705e1c538bf91be881c3630a82c41618358310bbdd2
-SHA1: eaf3e5db69f0e33c8be8981e6c0ad7d52c2cbfba
-MD5sum: bda478bb6ec1f1a51ef39cd400e01820
+Filename: pool/main/a/amazoncorretto-8-jdk-hotspot-installer/amazoncorretto-8-jdk-hotspot-set-default_201903040052~8.202.08.2_all.deb
+Size: 1876
+SHA256: 06f7610d6727c2b6a04ba1fc86cfe58804fa14e51913f7a7cecc5a25de0763a4
+SHA1: f0540f0708e4a66f42ca4f28555ca37ec5ed8a74
+MD5sum: c3ab877fd47e38ca318970a2259813b1
 Description: Set Amazon Corretto JDK 8 with Hotspot as default
  Sets Amazon Corretto JDK 8 with Hotspot as the system default.
  This will set JAVA_HOME, and run update-java-alternatives for you.
