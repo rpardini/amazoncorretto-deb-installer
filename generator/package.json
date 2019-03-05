@@ -1,6 +1,6 @@
 {
   "name": "amazoncorretto-deb-generator",
-  "version": "0.0.1",
+  "version": "0.0.8",
   "description": "",
   "main": "generate.js",
   "scripts": {},
